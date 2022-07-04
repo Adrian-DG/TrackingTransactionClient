@@ -39,6 +39,7 @@ export class AuthServiceService {
 		}/auth`;
 	}
 
+	// Get Token Information
 	setTokenInfo(token: string): void {
 		const tokenInfo: IDecodedToken = this._jwt.GetDecodedToken(token);
 		this.tokenSource.next(tokenInfo);
@@ -47,9 +48,13 @@ export class AuthServiceService {
 	checkIfAuthenticated(): void {
 		const token: string | null = sessionStorage?.getItem('token');
 
-		token != null && this._jwt.DidTokenExpire(token)
-			? this.isAuthenticatedSource.next(true)
-			: this.isAuthenticatedSource.next(false);
+		// check if token exists and token expiration
+		if (token != null && !this._jwt.DidTokenExpire(token)) {
+			this.isAuthenticatedSource.next(true);
+			this.setTokenInfo(token);
+		} else {
+			this.isAuthenticatedSource.next(false);
+		}
 	}
 
 	register(model: IUserModel): void {
@@ -68,8 +73,8 @@ export class AuthServiceService {
 			.subscribe((resp: ILoginResponse) => {
 				if (resp.status) {
 					sessionStorage.setItem('token', resp.token);
-					this.isAuthenticatedSource.next(true);
 					this.$router.navigate(['home']);
+					this._toast.toastStyles.success(resp.message);
 				} else {
 					this._toast.toastStyles.error(resp.message);
 				}

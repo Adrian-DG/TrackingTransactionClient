@@ -25,8 +25,9 @@
 						role="button"
 						data-bs-toggle="dropdown"
 						aria-expanded="false"
+						*ngIf="_auth.token$ | async as user"
 					>
-						{{ (_auth.token$ | async)?.username }}
+						Welcome, {{ user.name }}
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<li><a class="dropdown-item" href="#">Action</a></li>

@@ -1,5 +1,5 @@
 export interface IDecodedToken {
-	id: string;
-	username: string;
+	nameid: string;
+	name: string;
 	role: string;
 }
