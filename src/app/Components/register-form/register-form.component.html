@@ -1,0 +1,40 @@
+<div class="card-body">
+	<h3 class="card-title text-center text-muted">Welcome</h3>
+	<p class="card-text text-center text-muted">
+		Tracking Systems is the best way to organize your finances
+	</p>
+	<form
+		id="registerForm"
+		[formGroup]="registerForm"
+		(ngSubmit)="registerUser()"
+	>
+		<div class="mb-3">
+			<label for="" class="form-label text-muted">Username</label
+			><input
+				type="text"
+				class="form-control"
+				placeholder="username"
+				formControlName="username"
+			/>
+		</div>
+		<div class="mb-3">
+			<label for="" class="form-label text-muted">Password</label
+			><input
+				type="password"
+				class="form-control"
+				placeholder="password"
+				formControlName="password"
+			/>
+		</div>
+	</form>
+	<div class="d-grid gap-2">
+		<button
+			type="submit"
+			class="btn btn-secondary"
+			form="registerForm"
+			[disabled]="!registerForm.valid"
+		>
+			Start using it
+		</button>
+	</div>
+</div>
