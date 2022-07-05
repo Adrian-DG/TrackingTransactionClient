@@ -39,6 +39,10 @@ export class AuthServiceService {
 		}/auth`;
 	}
 
+	getToken(): string | null {
+		return null ?? sessionStorage.getItem('token');
+	}
+
 	// Get Token Information
 	setTokenInfo(token: string): void {
 		const tokenInfo: IDecodedToken = this._jwt.GetDecodedToken(token);
