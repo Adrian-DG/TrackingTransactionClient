@@ -39,10 +39,6 @@ export class AuthServiceService {
 		}/auth`;
 	}
 
-	getToken(): string | null {
-		return null ?? sessionStorage.getItem('token');
-	}
-
 	// Get Token Information
 	setTokenInfo(token: string): void {
 		const tokenInfo: IDecodedToken = this._jwt.GetDecodedToken(token);
@@ -51,7 +47,6 @@ export class AuthServiceService {
 
 	checkIfAuthenticated(): void {
 		const token: string | null = sessionStorage?.getItem('token');
-
 		// check if token exists and token expiration
 		if (token != null && !this._jwt.DidTokenExpire(token)) {
 			this.isAuthenticatedSource.next(true);

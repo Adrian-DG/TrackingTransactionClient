@@ -18,7 +18,7 @@ import { TransactionsFormComponent } from './Components/transactions/transaction
 import { TransactionsListComponent } from './Components/transactions/transactions-list/transactions-list.component';
 import { AccountListComponent } from './Components/account/account-list/account-list.component';
 import { AccountFormComponent } from './Components/account/account-form/account-form.component';
-import { JwtInterceptor } from '@auth0/angular-jwt';
+import { JwtInterceptor } from './Interceptors/Jwt/jwt.interceptor';
 
 @NgModule({
 	declarations: [

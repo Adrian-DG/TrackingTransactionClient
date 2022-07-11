@@ -11,6 +11,7 @@ import { IPaginationFilters } from 'src/app/Interfaces/ipagination-filters';
 import { IPagedData } from 'src/app/Interfaces/ipaged-data';
 import { Guid } from 'guid-typescript';
 import { IServerResponse } from 'src/app/Interfaces/iserver-response';
+import { AsyncSubject, ReplaySubject } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
@@ -18,6 +19,9 @@ import { IServerResponse } from 'src/app/Interfaces/iserver-response';
 export abstract class GenericService<T> {
 	protected readonly endPoint: string = '';
 	abstract GetResourceUrl(): string;
+
+	protected listSource = new ReplaySubject<IPagedData<T>>();
+	public list$ = this.listSource.asObservable();
 
 	constructor(
 		protected $http: HttpClient,

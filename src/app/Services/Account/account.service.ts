@@ -36,7 +36,10 @@ export class AccountService extends GenericService<IAccount> {
 			.get<IPagedData<IAccount>>(`${this.endPoint}/${userId}/all`, {
 				params: queryParams,
 			})
-			.subscribe((resp: IPagedData<IAccount>) => console.log(resp));
+			.subscribe((resp: IPagedData<IAccount>) => {
+				console.log(resp);
+				this.listSource.next(resp);
+			});
 	}
 
 	DeleteCustomerAccount(accountId: string): void {
