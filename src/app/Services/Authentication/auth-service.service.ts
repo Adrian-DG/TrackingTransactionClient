@@ -39,6 +39,10 @@ export class AuthServiceService {
 		}/auth`;
 	}
 
+	getTokenInfo(): Observable<IDecodedToken | null> {
+		return this.token$;
+	}
+
 	// Get Token Information
 	setTokenInfo(token: string): void {
 		const tokenInfo: IDecodedToken = this._jwt.GetDecodedToken(token);

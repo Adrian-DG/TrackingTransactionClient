@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ResolveStart } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
 import { IAccount } from 'src/app/Interfaces/iaccount';
@@ -8,13 +9,14 @@ import { IPaginationFilters } from 'src/app/Interfaces/ipagination-filters';
 import { AccountService } from 'src/app/Services/Account/account.service';
 import { AuthServiceService } from 'src/app/Services/Authentication/auth-service.service';
 
+import { Roles } from '../../../Enums/Roles.enum';
+
 @Component({
 	selector: 'app-account-list',
 	templateUrl: './account-list.component.html',
 	styleUrls: ['./account-list.component.scss'],
 })
 export class AccountListComponent implements OnInit {
-	userId!: string;
 	filters: IPaginationFilters = {
 		page: 1,
 		size: 10,
@@ -36,10 +38,15 @@ export class AccountListComponent implements OnInit {
 	getAccountInfo() {
 		this._auth.token$.subscribe((resp: IDecodedToken | null) => {
 			if (resp) {
-				this.userId = resp.nameid;
+				parseInt(resp.role) == Roles.Administrator
+					? this._account.GetAll(this.filters)
+					: this._account.GetCustomerAccounts(
+							this.filters,
+							resp.nameid // userId
+					  );
 			}
 		});
 
-		this._account.GetCustomerAccounts(this.filters, this.userId);
+		// TODO: remember to unsuscribe observable
 	}
 }

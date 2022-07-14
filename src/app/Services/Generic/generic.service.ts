@@ -11,7 +11,7 @@ import { IPaginationFilters } from 'src/app/Interfaces/ipagination-filters';
 import { IPagedData } from 'src/app/Interfaces/ipaged-data';
 import { Guid } from 'guid-typescript';
 import { IServerResponse } from 'src/app/Interfaces/iserver-response';
-import { AsyncSubject, ReplaySubject } from 'rxjs';
+import { AsyncSubject, ReplaySubject, Subject } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
@@ -20,6 +20,8 @@ export abstract class GenericService<T> {
 	protected readonly endPoint: string = '';
 	abstract GetResourceUrl(): string;
 
+	protected currentSubjectSource = new Subject<T>();
+	public $currentSubject = this.currentSubjectSource.asObservable();
 	protected listSource = new ReplaySubject<IPagedData<T>>();
 	public list$ = this.listSource.asObservable();
 
@@ -33,6 +35,12 @@ export abstract class GenericService<T> {
 		}/${this.GetResourceUrl()}`;
 	}
 
+	protected GenerateToast(status: boolean, message: string): void {
+		status
+			? this._toast.toastStyles.success(message)
+			: this._toast.toastStyles.error(message);
+	}
+
 	GetAll(filters: IPaginationFilters): void {
 		const queryParams = new HttpParams()
 			.set('page', filters.page)
@@ -43,33 +51,37 @@ export abstract class GenericService<T> {
 		this.$http
 			.get<IPagedData<T>>(this.endPoint, { params: queryParams })
 			.subscribe((resp: IPagedData<T>) => {
-				console.log(resp);
+				this.listSource.next(resp);
 			});
 	}
 
 	GetById(id: Guid): void {
-		this.$http.get<T>(`${this.endPoint}/${id}`).subscribe((resp: T) => {
-			console.log(resp);
-		});
+		this.$http
+			.get<T>(`${this.endPoint}/${id}`)
+			.subscribe((resp: T) => this.currentSubjectSource.next(resp));
 	}
 
 	Post(model: T): void {
 		this.$http
 			.post<IServerResponse>(this.endPoint, model)
-			.subscribe((resp: IServerResponse) => {
-				console.log(resp);
-			});
+			.subscribe((resp: IServerResponse) =>
+				this.GenerateToast(resp.status, resp.message)
+			);
 	}
 
 	Put(model: T): void {
 		this.$http
 			.put<IServerResponse>(this.endPoint, model)
-			.subscribe((resp: IServerResponse) => console.log(resp));
+			.subscribe((resp: IServerResponse) =>
+				this.GenerateToast(resp.status, resp.message)
+			);
 	}
 
 	Delete(id: Guid): void {
 		this.$http
 			.delete<IServerResponse>(`${this.endPoint}/${id}`)
-			.subscribe((resp: IServerResponse) => console.log(resp));
+			.subscribe((resp: IServerResponse) =>
+				this.GenerateToast(resp.status, resp.message)
+			);
 	}
 }

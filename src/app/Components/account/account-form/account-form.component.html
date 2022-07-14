@@ -1,1 +1,27 @@
-<p>account-form works!</p>
+<form
+	class="row justify-content-start"
+	[formGroup]="accountForm"
+	(ngSubmit)="createAccount()"
+>
+	<div class="col-6">
+		<label class="form-label">Description</label
+		><input
+			type="text"
+			class="form-control"
+			formControlName="description"
+			placeholder="description"
+		/><small class="form-text"></small>
+	</div>
+	<div class="col-4">
+		<label class="form-label">Account Type</label>
+		<select class="form-select" formControlName="type">
+			<option selected [value]="0">select account type</option>
+			<option [value]="1">Savings</option>
+			<option [value]="2">Current</option>
+		</select>
+		<small class="form-text"></small>
+	</div>
+	<div class="col-2 pt-4 d-grid gap-2">
+		<button class="mt-2 btn btn-success">Create</button>
+	</div>
+</form>
