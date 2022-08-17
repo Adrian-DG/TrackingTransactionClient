@@ -64,9 +64,9 @@ export abstract class GenericService<T> {
 	Post(model: T): void {
 		this.$http
 			.post<IServerResponse>(this.endPoint, model)
-			.subscribe((resp: IServerResponse) =>
-				this.GenerateToast(resp.status, resp.message)
-			);
+			.subscribe((resp: IServerResponse) => {
+				this.GenerateToast(resp.status, resp.message);
+			});
 	}
 
 	Put(model: T): void {

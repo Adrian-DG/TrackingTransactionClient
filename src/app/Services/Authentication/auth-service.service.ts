@@ -76,7 +76,7 @@ export class AuthServiceService {
 			.subscribe((resp: ILoginResponse) => {
 				if (resp.status) {
 					sessionStorage.setItem('token', resp.token);
-					this.$router.navigate(['home']);
+					this.$router.navigate(['accounts']);
 					this._toast.toastStyles.success(resp.message);
 				} else {
 					this._toast.toastStyles.error(resp.message);

@@ -5,5 +5,5 @@ export interface ITransaction extends IModelMetadata {
 	concept: string;
 	description: string;
 	amount: number;
-	accountId: Guid;
+	accountId: string;
 }

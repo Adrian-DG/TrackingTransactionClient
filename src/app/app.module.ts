@@ -8,6 +8,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotToastModule } from '@ngneat/hot-toast';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { HomeComponent } from './Pages/home/home.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
@@ -19,6 +20,7 @@ import { TransactionsListComponent } from './Components/transactions/transaction
 import { AccountListComponent } from './Components/account/account-list/account-list.component';
 import { AccountFormComponent } from './Components/account/account-form/account-form.component';
 import { JwtInterceptor } from './Interceptors/Jwt/jwt.interceptor';
+import { TransactionContainerComponent } from './Pages/transaction-container/transaction-container.component';
 
 @NgModule({
 	declarations: [
@@ -32,6 +34,7 @@ import { JwtInterceptor } from './Interceptors/Jwt/jwt.interceptor';
 		TransactionsListComponent,
 		AccountListComponent,
 		AccountFormComponent,
+		TransactionContainerComponent,
 	],
 	imports: [
 		BrowserModule,

@@ -1,1 +1,55 @@
-<p>transactions-form works!</p>
+<form [formGroup]="transactionForm" (ngSubmit)="saveTrasaction()" class="pt-3">
+	<h4 class="text-center text-muted">Transactions Formulary</h4>
+	<hr />
+	<div class="row justify-content-around align-items-start">
+		<div class="mb-3 col-6">
+			<label for="" class="form-label">Concept</label>
+			<input
+				type="text"
+				class="form-control"
+				placeholder="concept"
+				formControlName="concept"
+			/><small class="form-text"
+				>Write the concept of the trasaction</small
+			>
+		</div>
+		<div class="mb-3 col-6">
+			<label for="" class="form-label">Amount</label
+			><input
+				type="number"
+				class="form-control"
+				placeholder="0.00"
+				formControlName="amount"
+			/><small class="form-text"
+				>the amount spended for this transaction</small
+			>
+		</div>
+	</div>
+
+	<div class="mb-3">
+		<label for="" class="form-label">Description</label
+		><textarea
+			type="text"
+			class="form-control"
+			placeholder="description..."
+			rows="3"
+			formControlName="description"
+		></textarea>
+		<small class="form-text"
+			>Optional text you use to describe the spend</small
+		>
+	</div>
+
+	<div class="d-grid gap-2">
+		<button class="btn btn-secondary" type="button" (click)="resetForm()">
+			Cancel
+		</button>
+		<button
+			type="submit"
+			class="btn btn-primary"
+			[disabled]="!transactionForm.valid"
+		>
+			Save Transaction
+		</button>
+	</div>
+</form>

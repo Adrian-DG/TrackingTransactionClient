@@ -1,1 +1,33 @@
-<p>transactions-list works!</p>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Concept</th>
+			<th scope="col">Description</th>
+			<th scope="col">Created</th>
+			<th scope="col">Modified</th>
+			<th scope="col">Status</th>
+			<th scope="col">Options</th>
+		</tr>
+	</thead>
+
+	<tbody *ngIf="accountTransactionList | async as result; else emptyDiv">
+		<tr *ngFor="let item of result.items; index as i">
+			<th scope="row">{{ i + 1 }}</th>
+			<td>{{ item.concept }}</td>
+			<td>{{ item.description }}</td>
+			<td>{{ item.created | date }}</td>
+			<td>{{ item.modified | date }}</td>
+			<td>{{ item.status ? 'Active' : 'Inactive' }}</td>
+			<td class="row">
+				<button class="btn btn-light">view</button>
+			</td>
+		</tr>
+	</tbody>
+
+	<ng-template #emptyDiv>
+		<div class="row">
+			<h3 class="text-center text-muted">No hay registros</h3>
+		</div>
+	</ng-template>
+</table>

@@ -7,6 +7,7 @@
 			<th scope="col">Created</th>
 			<th scope="col">Modified</th>
 			<th scope="col">Status</th>
+			<th scope="col">Options</th>
 		</tr>
 	</thead>
 
@@ -18,6 +19,14 @@
 			<td>{{ item.created | date }}</td>
 			<td>{{ item.modified | date }}</td>
 			<td>{{ item.status ? 'Active' : 'Inactive' }}</td>
+			<td class="row">
+				<button
+					class="btn btn-light"
+					(click)="showAccountTransactions(item.id)"
+				>
+					view
+				</button>
+			</td>
 		</tr>
 	</tbody>
 

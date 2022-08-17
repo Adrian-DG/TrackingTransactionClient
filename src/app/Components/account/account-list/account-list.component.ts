@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ResolveStart } from '@angular/router';
+import { ResolveStart, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
 import { IAccount } from 'src/app/Interfaces/iaccount';
@@ -8,6 +8,8 @@ import { IPagedData } from 'src/app/Interfaces/ipaged-data';
 import { IPaginationFilters } from 'src/app/Interfaces/ipagination-filters';
 import { AccountService } from 'src/app/Services/Account/account.service';
 import { AuthServiceService } from 'src/app/Services/Authentication/auth-service.service';
+
+// import { faEye } from '@fortawesome/free-solid-svg-icons';
 
 import { Roles } from '../../../Enums/Roles.enum';
 
@@ -24,9 +26,14 @@ export class AccountListComponent implements OnInit {
 		status: true,
 	};
 
+	// icons = {
+	// 	details: faEye,
+	// };
+
 	constructor(
 		private _account: AccountService,
-		private _auth: AuthServiceService
+		private _auth: AuthServiceService,
+		private $router: Router
 	) {}
 
 	accountInfo: Observable<IPagedData<IAccount>> = this._account.list$;
@@ -46,7 +53,10 @@ export class AccountListComponent implements OnInit {
 					  );
 			}
 		});
-
 		// TODO: remember to unsuscribe observable
+	}
+
+	showAccountTransactions(id: Guid): void {
+		this.$router.navigateByUrl(`accounts/${id}/transactions`);
 	}
 }
